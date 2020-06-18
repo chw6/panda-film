@@ -1,7 +1,7 @@
 <template>
   <div id="main">
     <Header title="熊猫影院" />
-    <TabBar />
+
     <div id="content">
       <div class="cinema_menu">
         <div class="city_switch">
@@ -14,8 +14,9 @@
           特色 <i class="iconfont icon-lower-triangle"></i>
         </div>
       </div>
+      <CiList />
     </div>
-    <CiList />
+    <TabBar></TabBar>
   </div>
 </template>
 
