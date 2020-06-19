@@ -10,15 +10,14 @@
       <h3>电影/电视剧/综艺</h3>
       <ul>
         <!-- <li>
-          <div class="img"><img src="/images/movie1.jpg" /></div>
-          <div class="info">
-            <p><span>无名之辈</span><span>8.5</span></p>
-            <p>A Cool Fish</p>
-            <p>剧情,喜剧,犯罪</p>
-            <p>2018-11-16</p>
-          </div>
-        </li> -->
-
+                    <div class="img"><img src="/images/movie_1.jpg"></div>
+                    <div class="info">
+                        <p><span>无名之辈</span><span>8.5</span></p>
+                        <p>A Cool Fish</p>
+                        <p>剧情,喜剧,犯罪</p>
+                        <p>2018-11-16</p>
+                    </div>
+                </li> -->
         <li v-for="item in moviesList" :key="item.id">
           <div class="img"><img :src="item.img | setWH('128.180')" /></div>
           <div class="info">
@@ -55,12 +54,11 @@ export default {
   watch: {
     message(newVal) {
       var that = this;
-      var city = this.$store.state.city.id;
+      var cityId = this.$store.state.city.id;
       this.cancelRequest();
       this.axios
-        .get("/api/searchList?cityId='+ cityId+'&kw=" + newVal, {
+        .get("/api/searchList?cityId=" + cityId + "&kw=" + newVal, {
           cancelToken: new this.axios.CancelToken(function(c) {
-            console.log(111111);
             that.source = c;
           }),
         })
