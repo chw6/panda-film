@@ -1,66 +1,64 @@
 <template>
-  <div class="login">
-    <h1>登录</h1>
-    <img src="@/assets/yingyuan.jpg" alt />
+  <div class="reg">
+    <h1>注册页</h1>
+    <input placeholder="请输入用户名" class="ipt" v-model="userName" />
     <input
-      type="text"
-      class="ipt"
-      v-model="userName"
-      placeholder="请输入用户名"
-    />
-    <input
-      type="password"
-      class="ipt"
-      v-model="password"
       placeholder="请输入密码"
+      class="ipt"
+      type="password"
+      v-model="password"
     />
-    <button class="btn" @click="loginHandle">登录</button>
-    <router-link to="register" class="reg">没有账号，我要注册</router-link>
+    <input
+      placeholder="确认密码"
+      class="ipt"
+      type="password"
+      v-model="password1"
+    />
+    <button class="btn" @click="regSuccess">注册</button>
+    <router-link to="login" class="login">已有账号，我要登录</router-link>
   </div>
 </template>
+
 <script>
-import { login } from "@/services/auth";
-import { getToken, setToken } from "@/utils/auth";
+import axios from "axios";
+import { reg } from "@/services/auth";
+import { setToken } from "@/utils/auth";
 export default {
-  name: "Login",
+  name: "register",
   data() {
     return {
       userName: "",
       password: "",
+      password1: "",
     };
   },
   methods: {
-    async loginHandle() {
-      const result = await login({
+    async regSuccess() {
+      const result = await reg({
         userName: this.userName,
         password: this.password,
       });
       console.log(result);
-      if (result.code == "success") {
+      if (result.code === "success") {
         setToken(result.token);
         this.$router
           .push({
-            path: "/mine/center",
+            path: "/mine/login",
           })
-          .catch(() => {});
-      } else {
-        alert(result.message);
+          .catch(result.message);
       }
     },
   },
 };
 </script>
+
 <style scoped>
-.login h1 {
+.reg h1 {
   text-align: center;
   color: red;
+  margin: 50px auto;
 }
-.login img {
-  width: 160px;
-  display: block;
-  margin: 25px auto;
-}
-.login .ipt {
+.reg .ipt {
   display: block;
   height: 30px;
   line-height: normal;
@@ -69,7 +67,7 @@ export default {
   border: none;
   border-bottom: 1px solid #d81e06;
 }
-.reg {
+.login {
   float: right;
   font-size: 0.8rem;
   margin-right: 3rem;
@@ -80,6 +78,7 @@ a {
   color: black;
   text-decoration: none;
 }
+
 .btn {
   border: none;
   background-color: #d81e06;
